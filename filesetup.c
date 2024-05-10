@@ -961,6 +961,7 @@ int setup_files(struct thread_data *td)
 		    !(td->flags & TD_F_DIRS_CREATED) &&
 		    !create_work_dirs(td, f->file_name))
 			goto err_out;
+		dprint(FD_FILE, "[DEBUG] file name: %s\n", f->file_name);
 	}
 
 	/*
