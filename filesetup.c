@@ -994,10 +994,12 @@ int setup_files(struct thread_data *td)
 		else
 			total_size += f->real_file_size;
 	}
+	dprint(FD_FILE, "[DEBUG] total size: %d\n", total_size);
 
 	if (o->fill_device)
 		td->fill_device_size = get_fs_free_counts(td);
-
+	
+	dprint(FD_FILE, "[DEBUG] fill_device_size: %d\n", td->fill_device_size);
 	/*
 	 * device/file sizes are zero and no size given, punt
 	 */
@@ -1032,6 +1034,7 @@ int setup_files(struct thread_data *td)
 	need_extend = 0;
 	for_each_file(td, f, i) {
 		f->file_offset = get_start_offset(td, f);
+		
 
 		/*
 		 * Update ->io_size depending on options specified.
@@ -1048,11 +1051,13 @@ int setup_files(struct thread_data *td)
 			 * doesn't divide nicely with the min blocksize,
 			 * make the first files bigger.
 			 */
+		  dprint(FD_FILE, "DEBUG before f->io_size: %d\n", f->io_size);
 			f->io_size = fs;
 			if (nr_fs_extra) {
 				nr_fs_extra--;
 				f->io_size += bs;
 			}
+			dprint(FD_FILE, "DEBUG after f->io_size: %d\n", f->io_size);
 
 			/*
 			 * We normally don't come here for regular files, but
