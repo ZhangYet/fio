@@ -994,7 +994,7 @@ int setup_files(struct thread_data *td)
 		else
 			total_size += f->real_file_size;
 	}
-	dprint(FD_FILE, "[DEBUG] total size: %lu\n", total_size);
+	dprint(FD_FILE, "[DEBUG] total size: %llu\n", total_size);
 
 	if (o->fill_device)
 		td->fill_device_size = get_fs_free_counts(td);
